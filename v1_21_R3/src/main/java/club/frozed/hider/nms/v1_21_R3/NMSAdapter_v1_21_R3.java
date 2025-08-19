@@ -2,10 +2,13 @@ package club.frozed.hider.nms.v1_21_R3;
 
 import club.frozed.hider.FrozedHider;
 import club.frozed.hider.nms.NMSAdapter;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.craftbukkit.v1_21_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 /**
  * NMS adapter for Minecraft 1.21.4-1.21.8 (v1_21_R3)
@@ -41,6 +44,24 @@ public class NMSAdapter_v1_21_R3 implements NMSAdapter {
             }
         }
     }
+
+	@Override
+	public void removeFromTablist(Player player) {
+		ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
+		ClientboundPlayerInfoRemovePacket removePlayer = new ClientboundPlayerInfoRemovePacket(List.of(serverPlayer.getUUID()));
+
+		for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
+			if (onlinePlayer.equals(player)) {
+				continue;
+			}
+
+			((CraftPlayer) onlinePlayer).getHandle().connection.send(removePlayer);
+
+			if (plugin.isDebug()) {
+				plugin.getServer().broadcastMessage("Packet sent to remove player from, player: " + player.getName());
+			}
+		}
+	}
 
     @Override
     public String getVersion() {
