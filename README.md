@@ -11,7 +11,7 @@ all done with packets, so players are not removed from the Tablist.
 
 ## Dependencies
 
-- [PaperSpigot 1.21.4](https://fill-data.papermc.io/v1/objects/5ee4f542f628a14c644410b08c94ea42e772ef4d29fe92973636b6813d4eaffc/paper-1.21.4-232.jar)
+- PaperSpigot (1.21.1+)
 - [WorldGuard v7.0.13](https://dev.bukkit.org/projects/worldguard/files/6201343/download)
 
 ## Building
