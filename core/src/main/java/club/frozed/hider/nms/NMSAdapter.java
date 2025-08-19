@@ -15,6 +15,12 @@ public interface NMSAdapter {
     void keepOnTablist(Player player);
 
     /**
+     * Sends packets to remove a player from the tablist
+     * @param player The player to remove from tablist
+     */
+    void removeFromTablist(Player player);
+
+    /**
      * Gets the NMS version this adapter supports
      * @return The NMS version string (e.g., "v1_21_R1")
      */
