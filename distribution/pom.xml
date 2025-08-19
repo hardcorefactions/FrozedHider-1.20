@@ -29,7 +29,6 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <minimizeJar>true</minimizeJar>
                         </configuration>
                     </execution>
                 </executions>
@@ -55,6 +54,16 @@
         <dependency>
             <groupId>club.frozed</groupId>
             <artifactId>v1_21_R3</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>club.frozed</groupId>
+            <artifactId>v1_21_R4</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>club.frozed</groupId>
+            <artifactId>v1_21_R5</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
