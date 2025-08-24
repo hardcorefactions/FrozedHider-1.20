@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  * @author Elb1to
@@ -40,7 +41,7 @@ public class PlayerListener implements Listener {
 	}
 
 	@EventHandler
-	public void onPlayerQuit(PlayerJoinEvent event) {
+	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 		if (!player.isOnline()) {
 			return;
@@ -50,7 +51,7 @@ public class PlayerListener implements Listener {
 	}
 
 	@EventHandler
-	public void onPlayerQuit(PlayerKickEvent event) {
+	public void onPlayerKick(PlayerKickEvent event) {
 		Player player = event.getPlayer();
 		if (!player.isOnline()) {
 			return;
