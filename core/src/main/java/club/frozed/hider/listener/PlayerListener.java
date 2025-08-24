@@ -77,6 +77,9 @@ public class PlayerListener implements Listener {
 	public void onRegionExit(PlayerRegionExitEvent event) {
 		Player player = event.getPlayer();
 		if (player == null || !player.isOnline()) {
+			if (plugin.isDebug()) {
+				plugin.getServer().broadcastMessage("Player is null or not online on region exit for region '" + event.getRegion().getId() + "'.");
+			}
 			return;
 		}
 
@@ -91,8 +94,11 @@ public class PlayerListener implements Listener {
 
 		StateFlag flag = plugin.getWorldGuardHook().getHidePlayerFlag();
 		boolean inHideRegion = plugin.getWorldGuardHook().getRegions(player.getUniqueId()).stream().anyMatch(r -> r.getFlag(flag) == StateFlag.State.ALLOW);
-		if (!inHideRegion) {
+		if (inHideRegion) {
 			plugin.getPlayerVisibilityManager().showPlayer(player, event.getRegion().getId());
+			if (plugin.isDebug()) {
+				plugin.getServer().broadcastMessage("Showing player '" + player.getName() + "' after leaving region '" + event.getRegion().getId() + "'.");
+			}
 		}
 	}
 }
