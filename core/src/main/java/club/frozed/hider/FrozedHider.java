@@ -20,6 +20,15 @@ public class FrozedHider extends JavaPlugin {
 	private NMSAdapter nmsAdapter;
 	private boolean debug;
 
+	{
+		worldGuardHook = new WorldGuardHook(this);
+	}
+
+	@Override
+	public void onLoad() {
+		worldGuardHook.registerFlag();
+	}
+
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
@@ -39,7 +48,7 @@ public class FrozedHider extends JavaPlugin {
 		this.nmsAdapter = adapter;
 		getLogger().info("Loaded NMS adapter for version: " + version);
 
-		this.worldGuardHook = new WorldGuardHook(this);
+		this.worldGuardHook.init();
 		this.playerVisibilityManager = new PlayerVisibilityManager(this);
 
 		getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
