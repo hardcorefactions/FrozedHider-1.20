@@ -49,28 +49,29 @@ public class FrozedHider extends JavaPlugin {
 
 	private String getServerVersion() {
 		String packageName = Bukkit.getServer().getClass().getPackage().getName();
-		return packageName.substring(packageName.lastIndexOf(".") + 1);
-	}
+		String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 
-	private NMSAdapter createNMSAdapter(String version) {
-		String nmsVersion = version;
-		if (nmsVersion.equals("craftbukkit")) {
+		if (version.equals("craftbukkit")) {
 			String bukkitVersion = Bukkit.getBukkitVersion();
 			if (bukkitVersion.startsWith("1.21.1")) {
-				nmsVersion = "v1_21_R1";
+				return "v1_21_R1";
 			} else if (bukkitVersion.startsWith("1.21.3")) {
-				nmsVersion = "v1_21_R2";
+				return "v1_21_R2";
 			} else if (bukkitVersion.startsWith("1.21.4")) {
-				nmsVersion = "v1_21_R3";
+				return "v1_21_R3";
 			} else if (bukkitVersion.startsWith("1.21.5")) {
-				nmsVersion = "v1_21_R4";
+				return "v1_21_R4";
 			} else if (bukkitVersion.startsWith("1.21.6") || bukkitVersion.startsWith("1.21.7") || bukkitVersion.startsWith("1.21.8")) {
-				nmsVersion = "v1_21_R5";
+				return "v1_21_R5";
 			}
 		}
 
+		return version;
+	}
+
+	private NMSAdapter createNMSAdapter(String version) {
 		try {
-			return switch (nmsVersion) {
+			return switch (version) {
 				case "v1_21_R1" -> {
 					Class<?> adapterClass1 = Class.forName("club.frozed.hider.nms.v1_21_R1.NMSAdapter_v1_21_R1");
 					yield (NMSAdapter) adapterClass1.getConstructor(FrozedHider.class).newInstance(this);
@@ -94,7 +95,7 @@ public class FrozedHider extends JavaPlugin {
 				default -> null;
 			};
 		} catch (Exception e) {
-			getLogger().severe("Failed to load NMS adapter for version " + nmsVersion + ": " + e.getMessage());
+			getLogger().severe("Failed to load NMS adapter for version " + version + ": " + e.getMessage());
 			return null;
 		}
 	}
