@@ -49,12 +49,28 @@ public class FrozedHider extends JavaPlugin {
 
 	private String getServerVersion() {
 		String packageName = Bukkit.getServer().getClass().getPackage().getName();
-		return packageName.substring(packageName.lastIndexOf('.') + 1);
+		return packageName.substring(packageName.lastIndexOf(".") + 1);
 	}
 
 	private NMSAdapter createNMSAdapter(String version) {
+		String nmsVersion = version;
+		if (nmsVersion.equals("craftbukkit")) {
+			String bukkitVersion = Bukkit.getBukkitVersion();
+			if (bukkitVersion.startsWith("1.21.1")) {
+				nmsVersion = "v1_21_R1";
+			} else if (bukkitVersion.startsWith("1.21.3")) {
+				nmsVersion = "v1_21_R2";
+			} else if (bukkitVersion.startsWith("1.21.4")) {
+				nmsVersion = "v1_21_R3";
+			} else if (bukkitVersion.startsWith("1.21.5")) {
+				nmsVersion = "v1_21_R4";
+			} else if (bukkitVersion.startsWith("1.21.6") || bukkitVersion.startsWith("1.21.7") || bukkitVersion.startsWith("1.21.8")) {
+				nmsVersion = "v1_21_R5";
+			}
+		}
+
 		try {
-			return switch (version) {
+			return switch (nmsVersion) {
 				case "v1_21_R1" -> {
 					Class<?> adapterClass1 = Class.forName("club.frozed.hider.nms.v1_21_R1.NMSAdapter_v1_21_R1");
 					yield (NMSAdapter) adapterClass1.getConstructor(FrozedHider.class).newInstance(this);
@@ -67,10 +83,18 @@ public class FrozedHider extends JavaPlugin {
 					Class<?> adapterClass3 = Class.forName("club.frozed.hider.nms.v1_21_R3.NMSAdapter_v1_21_R3");
 					yield (NMSAdapter) adapterClass3.getConstructor(FrozedHider.class).newInstance(this);
 				}
+				case "v1_21_R4" -> {
+					Class<?> adapterClass4 = Class.forName("club.frozed.hider.nms.v1_21_R4.NMSAdapter_v1_21_R4");
+					yield (NMSAdapter) adapterClass4.getConstructor(FrozedHider.class).newInstance(this);
+				}
+				case "v1_21_R5" -> {
+					Class<?> adapterClass5 = Class.forName("club.frozed.hider.nms.v1_21_R5.NMSAdapter_v1_21_R5");
+					yield (NMSAdapter) adapterClass5.getConstructor(FrozedHider.class).newInstance(this);
+				}
 				default -> null;
 			};
 		} catch (Exception e) {
-			getLogger().severe("Failed to load NMS adapter for version " + version + ": " + e.getMessage());
+			getLogger().severe("Failed to load NMS adapter for version " + nmsVersion + ": " + e.getMessage());
 			return null;
 		}
 	}
