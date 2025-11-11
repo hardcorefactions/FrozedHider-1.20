@@ -40,7 +40,7 @@ public class FrozedHider extends JavaPlugin {
 
 		if (adapter == null) {
 			getLogger().severe("Unsupported server version: " + version);
-			getLogger().severe("Supported versions: 1.21.1 - 1.21.8");
+			getLogger().severe("Supported versions: 1.20.4, 1.21.1 - 1.21.8");
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
@@ -62,7 +62,9 @@ public class FrozedHider extends JavaPlugin {
 
 		if (version.equals("craftbukkit")) {
 			String bukkitVersion = Bukkit.getBukkitVersion();
-			if (bukkitVersion.startsWith("1.21.1")) {
+			if (bukkitVersion.startsWith("1.20.4")) {
+				return "v1_20_R4";
+			} else if (bukkitVersion.startsWith("1.21.1")) {
 				return "v1_21_R1";
 			} else if (bukkitVersion.startsWith("1.21.3")) {
 				return "v1_21_R2";
@@ -81,25 +83,29 @@ public class FrozedHider extends JavaPlugin {
 	private NMSAdapter createNMSAdapter(String version) {
 		try {
 			return switch (version) {
-				case "v1_21_R1" -> {
-					Class<?> adapterClass1 = Class.forName("club.frozed.hider.nms.v1_21_R1.NMSAdapter_v1_21_R1");
+				case "v1_20_R4" -> {
+					Class<?> adapterClass1 = Class.forName("club.frozed.hider.nms.v1_20_R4.NMSAdapter_v1_20_R4");
 					yield (NMSAdapter) adapterClass1.getConstructor(FrozedHider.class).newInstance(this);
 				}
-				case "v1_21_R2" -> {
-					Class<?> adapterClass2 = Class.forName("club.frozed.hider.nms.v1_21_R2.NMSAdapter_v1_21_R2");
+				case "v1_21_R1" -> {
+					Class<?> adapterClass2 = Class.forName("club.frozed.hider.nms.v1_21_R1.NMSAdapter_v1_21_R1");
 					yield (NMSAdapter) adapterClass2.getConstructor(FrozedHider.class).newInstance(this);
 				}
-				case "v1_21_R3" -> {
-					Class<?> adapterClass3 = Class.forName("club.frozed.hider.nms.v1_21_R3.NMSAdapter_v1_21_R3");
+				case "v1_21_R2" -> {
+					Class<?> adapterClass3 = Class.forName("club.frozed.hider.nms.v1_21_R2.NMSAdapter_v1_21_R2");
 					yield (NMSAdapter) adapterClass3.getConstructor(FrozedHider.class).newInstance(this);
 				}
-				case "v1_21_R4" -> {
-					Class<?> adapterClass4 = Class.forName("club.frozed.hider.nms.v1_21_R4.NMSAdapter_v1_21_R4");
+				case "v1_21_R3" -> {
+					Class<?> adapterClass4 = Class.forName("club.frozed.hider.nms.v1_21_R3.NMSAdapter_v1_21_R3");
 					yield (NMSAdapter) adapterClass4.getConstructor(FrozedHider.class).newInstance(this);
 				}
-				case "v1_21_R5" -> {
-					Class<?> adapterClass5 = Class.forName("club.frozed.hider.nms.v1_21_R5.NMSAdapter_v1_21_R5");
+				case "v1_21_R4" -> {
+					Class<?> adapterClass5 = Class.forName("club.frozed.hider.nms.v1_21_R4.NMSAdapter_v1_21_R4");
 					yield (NMSAdapter) adapterClass5.getConstructor(FrozedHider.class).newInstance(this);
+				}
+				case "v1_21_R5" -> {
+					Class<?> adapterClass6 = Class.forName("club.frozed.hider.nms.v1_21_R5.NMSAdapter_v1_21_R5");
+					yield (NMSAdapter) adapterClass6.getConstructor(FrozedHider.class).newInstance(this);
 				}
 				default -> null;
 			};
