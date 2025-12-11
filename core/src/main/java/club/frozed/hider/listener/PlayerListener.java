@@ -86,11 +86,8 @@ public class PlayerListener implements Listener {
 
 		StateFlag flag = plugin.getWorldGuardHook().getHidePlayerFlag();
 		boolean inHideRegion = plugin.getWorldGuardHook().getRegions(player.getUniqueId()).stream().anyMatch(r -> r.getFlag(flag) == StateFlag.State.ALLOW);
-		if (inHideRegion) {
+		if (!inHideRegion) {
 			plugin.getPlayerVisibilityManager().showPlayer(player, event.getRegion().getId());
-			if (plugin.isDebug()) {
-				plugin.getServer().broadcast(Component.text("Showing player '" + player.getName() + "' after leaving region '" + event.getRegion().getId() + "'."));
-			}
 		}
 	}
 }
