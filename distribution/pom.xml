@@ -43,6 +43,11 @@
         </dependency>
         <dependency>
             <groupId>club.frozed</groupId>
+            <artifactId>v1_20_R3</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>club.frozed</groupId>
             <artifactId>v1_21_R1</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

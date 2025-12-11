@@ -1,4 +1,4 @@
-package club.frozed.hider.nms.v1_20_R4;
+package club.frozed.hider.nms.v1_20_R3;
 
 import club.frozed.hider.FrozedHider;
 import club.frozed.hider.nms.NMSAdapter;
@@ -11,15 +11,15 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 /**
- * NMS adapter for Minecraft 1.20.4 (v1_20_R4)
+ * NMS adapter for Minecraft 1.20.3 (v1_20_R3)
  * @author jsexp
  * @since 11/10/2025
  */
-public class NMSAdapter_v1_20_R4 implements NMSAdapter {
+public class NMSAdapter_v1_20_R3 implements NMSAdapter {
 
     private final FrozedHider plugin;
 
-    public NMSAdapter_v1_20_R4(FrozedHider plugin) {
+    public NMSAdapter_v1_20_R3(FrozedHider plugin) {
         this.plugin = plugin;
     }
 
@@ -65,6 +65,6 @@ public class NMSAdapter_v1_20_R4 implements NMSAdapter {
 
     @Override
     public String getVersion() {
-        return "v1_20_R4";
+        return "v1_20_R3";
     }
 }
