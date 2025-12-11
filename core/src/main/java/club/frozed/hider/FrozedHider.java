@@ -4,9 +4,14 @@ import club.frozed.hider.hook.WorldGuardHook;
 import club.frozed.hider.listener.PlayerListener;
 import club.frozed.hider.manager.PlayerVisibilityManager;
 import club.frozed.hider.nms.NMSAdapter;
+import club.frozed.hider.command.ToggleHiderCommand;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Elb1to
@@ -15,10 +20,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 @Getter
 public class FrozedHider extends JavaPlugin {
 
-	private WorldGuardHook worldGuardHook;
+	private final WorldGuardHook worldGuardHook;
 	private PlayerVisibilityManager playerVisibilityManager;
 	private NMSAdapter nmsAdapter;
 	private boolean debug;
+
+	private final Set<UUID> toggledViewers = ConcurrentHashMap.newKeySet();
 
 	{
 		worldGuardHook = new WorldGuardHook(this);
@@ -53,6 +60,7 @@ public class FrozedHider extends JavaPlugin {
 
 		getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 
+		Bukkit.getServer().getCommandMap().register("togglehider", new ToggleHiderCommand(this));
 		getLogger().info("FrozedHider has been enabled using NMS version: " + nmsAdapter.getVersion());
 	}
 

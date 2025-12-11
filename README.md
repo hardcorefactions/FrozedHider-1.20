@@ -30,7 +30,7 @@ mvn clean package
 ## Installation
 
 1. Download the latest release from the [releases page](https://github.com/FrozedClub/frozedhider/releases).
-2. Place the `frozedhider-1.0.0.jar` file in your server's `plugins` folder.
+2. Place the plugin JAR file in your server's `plugins` folder.
 3. Restart or reload your server.
 
 ## Configuration
@@ -44,17 +44,16 @@ debug: false
 
 ## Usage & Permissions
 
-To hide players in a WorldGuard region, you need to set the `hide-player` flag on the region.
+To hide players in a WorldGuard region, set the `hide-player` flag on the region.
 
-If you want to see debug messages in the console, set `debug` to `true` in the configuration file.
+Permission model (current):
+- `frozedhider.see-always`: players with this permission are always visible (never hidden by the plugin).
+- `frozedhider.toggle`: players with this permission can run `/togglehider` to toggle seeing all hidden players (or revert to normal visibility).
 
-If you want a player to stay hidden after they leave the region, you can use the `frozedhider.stay-hidden` permission.
-
-If you want to see hidden players inside the region, you can use the `frozedhider.view-all` permission.
-
-If you want staff players to see other staff players inside the region, you can use the `frozedhider.view-staff` permission.
-
-If you want a player to be considered as staff, you can use the `frozedhider.staff` permission.
+Behavior summary:
+- By default, players inside a `hide-player` region are invisible to everyone.
+- Players with `frozedhider.see-always` will remain visible to everyone even if they are inside a hide region.
+- Players with `frozedhider.toggle` can run `/togglehider` to see all hidden players or to go back to normal visibility.
 
 ## Author
 
@@ -63,4 +62,3 @@ This plugin is developed and maintained by [Elb1to](https://elb1to.me).
 ## License
 
 This project is licensed under the FCDL-2.0 License - see the [LICENSE](LICENSE) file for details.
-

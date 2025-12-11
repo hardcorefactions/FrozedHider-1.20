@@ -18,6 +18,7 @@ import com.sk89q.worldguard.session.MoveType;
 import com.sk89q.worldguard.session.Session;
 import com.sk89q.worldguard.session.handler.Handler;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -105,7 +106,7 @@ public class WorldGuardHook {
 				plugin.getServer().getPluginManager().callEvent(event);
 				if (event.isCancelled()) {
 					if (plugin.isDebug()) {
-						plugin.getServer().broadcastMessage("Player " + player.getName() + " was prevented from entering region: " + region.getId());
+						plugin.getServer().broadcast(Component.text("Player " + player.getName() + " was prevented from entering region: " + region.getId()));
 					}
 
 					return false;
@@ -117,7 +118,7 @@ public class WorldGuardHook {
 				plugin.getServer().getPluginManager().callEvent(event);
 				if (event.isCancelled()) {
 					if (plugin.isDebug()) {
-						plugin.getServer().broadcastMessage("Player " + player.getName() + " was prevented from exiting region: " + region.getId());
+						plugin.getServer().broadcast(Component.text("Player " + player.getName() + " was prevented from exiting region: " + region.getId()));
 					}
 
 					return false;

@@ -2,6 +2,7 @@ package club.frozed.hider.manager;
 
 import club.frozed.hider.FrozedHider;
 import com.sk89q.worldguard.protection.flags.StateFlag;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 /**
@@ -21,9 +22,9 @@ public class PlayerVisibilityManager {
 			if (onlinePlayer == player || !onlinePlayer.isOnline()) {
 				continue;
 			}
-			if (canSee(onlinePlayer, player, regionId)) {
+			if (shouldViewerSeeTarget(onlinePlayer, player, regionId)) {
 				if (plugin.isDebug()) {
-					plugin.getServer().broadcastMessage("Player '" + onlinePlayer.getName() + "' can see '" + player.getName() + "' due to permissions.");
+					plugin.getServer().broadcast(Component.text("Player '" + onlinePlayer.getName() + "' can see '" + player.getName() + "' due to permissions."));
 				}
 				continue;
 			}
@@ -33,7 +34,7 @@ public class PlayerVisibilityManager {
 		plugin.getNmsAdapter().keepOnTablist(player);
 
 		if (plugin.isDebug()) {
-			plugin.getServer().broadcastMessage("Hiding player '" + player.getName() + "' in region '" + regionId + "'.");
+			plugin.getServer().broadcast(Component.text("Hiding player '" + player.getName() + "' in region '" + regionId + "'."));
 		}
 	}
 
@@ -46,23 +47,23 @@ public class PlayerVisibilityManager {
 		}
 
 		if (plugin.isDebug()) {
-			plugin.getServer().broadcastMessage("Showing player '" + player.getName() + "' from region '" + regionId + "'.");
+			plugin.getServer().broadcast(Component.text("Showing player '" + player.getName() + "' from region '" + regionId + "'."));
 		}
 	}
 
-	private boolean canSee(Player viewer, Player target, String regionId) {
-		// Check if viewer has frozedhider.view-all permission (can see all hidden players)
-		if (viewer.hasPermission("frozedhider.view-all")) {
+	public boolean shouldViewerSeeTarget(Player viewer, Player target, String regionId) {
+		// If the target is not in a hide region, they should be visible normally
+		if (regionId == null) {
 			return true;
 		}
 
-		// Check if both players are staff and viewer has frozedhider.view-staff permission
-		if (viewer.hasPermission("frozedhider.view-staff") && target.hasPermission("frozedhider.staff")) {
+		// If the target has the see-always permission, they are always visible
+		if (target.hasPermission("frozedhider.see-always")) {
 			return true;
 		}
 
-		// Check if the viewer is in the same hide region as the target
-		return regionId != null && isPlayerInHideRegion(viewer, regionId);
+		// If the viewer has toggled viewing on, they should see everyone
+        return plugin.getToggledViewers().contains(viewer.getUniqueId());
 	}
 
 	private boolean isPlayerInHideRegion(Player player, String regionId) {

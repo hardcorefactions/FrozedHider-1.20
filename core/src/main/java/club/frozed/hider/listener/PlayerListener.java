@@ -5,6 +5,7 @@ import club.frozed.hider.event.PlayerRegionEntryEvent;
 import club.frozed.hider.event.PlayerRegionExitEvent;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -78,16 +79,7 @@ public class PlayerListener implements Listener {
 		Player player = event.getPlayer();
 		if (player == null || !player.isOnline()) {
 			if (plugin.isDebug()) {
-				plugin.getServer().broadcastMessage("Player is null or not online on region exit for region '" + event.getRegion().getId() + "'.");
-			}
-			return;
-		}
-
-		// If the player has 'frozedhider.stay-hidden' permission,
-		// don't make them visible when they exit the region
-		if (player.hasPermission("frozedhider.stay-hidden")) {
-			if (plugin.isDebug()) {
-				plugin.getServer().broadcastMessage("Player '" + player.getName() + "' has stay-hidden permission, remaining hidden after leaving region '" + event.getRegion().getId() + "'.");
+				plugin.getServer().broadcast(Component.text("Player is null or not online on region exit for region '" + event.getRegion().getId() + "'."));
 			}
 			return;
 		}
@@ -97,7 +89,7 @@ public class PlayerListener implements Listener {
 		if (inHideRegion) {
 			plugin.getPlayerVisibilityManager().showPlayer(player, event.getRegion().getId());
 			if (plugin.isDebug()) {
-				plugin.getServer().broadcastMessage("Showing player '" + player.getName() + "' after leaving region '" + event.getRegion().getId() + "'.");
+				plugin.getServer().broadcast(Component.text("Showing player '" + player.getName() + "' after leaving region '" + event.getRegion().getId() + "'."));
 			}
 		}
 	}
